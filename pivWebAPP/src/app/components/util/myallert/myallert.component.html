@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Attenzione!</h1>
+<div mat-dialog-content>
+  Disattiva il cellulare o regola in maniera più alta il riciclo dell'aria.
+  <ul>
+    <li>
+      <span *ngIf="data.sensorData >= 230"></span> I dati letti sono troppo alti.
+    </li>
+  </ul>
+</div>

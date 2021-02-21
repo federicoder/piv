@@ -1,0 +1,66 @@
+<div class="grid-container">
+  <mat-grid-list cols="4" rows="1" rowHeight="320px">
+    <mat-grid-tile colspan="1" rowspan="1"  style="margin-top: 60px">
+      <mat-card class="dashboard-card" >
+        <mat-card-header>
+
+          <mat-card-title>
+            Lpg
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menuTemperature" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menuTemperature="matMenu" xPosition="before">
+              <button mat-menu-item *ngIf="(this.device | async) === null" (click)="this.requestValue()">
+                <mat-icon>bluetooth_searching</mat-icon>
+                Connect
+              </button>
+              <button mat-menu-item *ngIf="(this.device | async)" (click)="this.disconnect()">
+                <mat-icon>bluetooth_disabled</mat-icon>
+                Disconnect
+              </button>
+            </mat-menu>
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="(this.device |async) == null">
+            Please connect your device.
+          </mat-card-subtitle>
+          <mat-card-subtitle *ngIf="this.deviceIsConnected == true && (this.device |async)">
+            {{this.deviceName}}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+
+          <!-- <ble-temperature #temperature></ble-temperature> -->
+        </mat-card-content>
+      </mat-card>
+
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="1" style="margin-top: 60px;">
+      <app-mq135 #mq135  ></app-mq135>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1" style="margin-top: 60px;">
+    <app-rf #rf ></app-rf>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1" style="margin-top: 60px;">
+    <app-co #co ></app-co>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1" style="margin-top: -100px;">
+    <app-smoke #smoke ></app-smoke>
+  </mat-grid-tile>
+    <mat-card >
+    <div class="contenitore">
+      <div class="colonne">
+     <div> Lpg : {{ this.myMap.get("lpg")}}</div>
+     <div>Co : {{ this.co.myMap4.get("co")}}</div>
+   <div> Smoke : {{ this.smoke.myMap5.get("smoke")}}</div>
+  </div>
+</div>
+<p style="text-align:right; margin-right: 70px;">AirQuality : {{ this.mq135.myMap.get("mq135")}}</p>
+<p style="text-align:right; margin-right: 70px;">RF : {{ this.rf.myMap3.get("rf")}}</p>
+  </mat-card>
+
+  </mat-grid-list>
+
+
+  <!-- <button mat-button (click)="openDialog()" >opendialog</button> -->
+</div>
