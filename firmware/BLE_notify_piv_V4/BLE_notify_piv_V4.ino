@@ -27,7 +27,7 @@
 #include "Hardwareserial.h"
 
 HardwareSerial RxSerial(1);
-int lpg, co, smoke;
+int lpg, co, smoke, airquality;
 
 int Gas_analogMQ2 = 15;   
 int Gas_analogMQ135 = 33;
@@ -74,9 +74,10 @@ void setup() {
   
   Serial.begin(115200);
   mq2.begin();
+
   // Create the BLE Device
   BLEDevice::init("ESP32");
-  RxSerial.begin(2400,SERIAL_8N1,19,17);
+
   // Create the BLE Server
   pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
@@ -155,47 +156,31 @@ void setup() {
 
 void loop() {
 
-    //RF sensor:
-    String received = "";
-    int receivedInt = 255;
-
-    delay(2000);
     // notify changed value
     if (deviceConnected) {
-        uint8_t gassensorAnalogMQ2 = analogRead(Gas_analogMQ2);
-        uint8_t gassensorAnalogMQ135 = analogRead(Gas_analogMQ135);
-        int lett1 = analogRead(Gas_analogMQ2);
-        int lett2 = analogRead(Gas_analogMQ135);
+
+        airquality=analogRead(Gas_analogMQ135);
+
         lpg = mq2.readLPG();
         co = mq2.readCO();
         smoke = mq2.readSmoke();
-    
+
+        int rf = analogRead(RF_analog);
+
+
+        Serial.print("Air Quality : ");
+        Serial.println(airquality);
+
         Serial.print("lpg : ");
         Serial.println(lpg);
         Serial.print("co : ");
         Serial.println(co);
         Serial.print("smoke : ");
         Serial.println(smoke);
-        
-        Serial.print("MQ2 :");
-        Serial.println(analogRead(Gas_analogMQ2));
-        Serial.print("MQ135 : ");
-        Serial.println(analogRead(Gas_analogMQ135));
-        received = char(RxSerial.read());
-        receivedInt = RxSerial.read();
-        Serial.print("receivedInt : ");
-        Serial.println(receivedInt);
-        Serial.print("received : ");
-        Serial.println(received);
-        int rf = analogRead(RF_analog);
+
         Serial.print("RF: ");
         Serial.println(rf);
 
-        value = lett1;
-        value = (value<<16)|lett2;
-  //      pCharacteristic->setValue((uint8_t*)&value, 4);
-  //      value = (value<<8)|lett2;
- //       pCharacteristic->setValue((uint8_t*)&value, 2);
         pCharacteristic->setValue(lpg);
         pCharacteristic->notify();
         pCharacteristic2->setValue(lett2);
