@@ -1,21 +1,52 @@
+<mat-toolbar color="secondary">
+  <span style="margin-left:20px">Data History</span>
+</mat-toolbar>
 
-<mat-grid-list cols="2" rows="1" rowHeight="100px">
+<!--<mat-grid-list cols="2" rows="1" rowHeight="100px">
   <mat-grid-tile colspan="2" rowspan="1">
     <mat-card class="dashboard-card">
       <mat-card-header>
-
         <mat-card-title>
-          Storico dei dati:
+        Storico dei dati:
         </mat-card-title>
       </mat-card-header>
     </mat-card>
   </mat-grid-tile>
-</mat-grid-list>
+</mat-grid-list>-->
 
-<mat-tab-group style="background:rgb(69, 90, 184);color-adjust:white;" animationDuration="400ms" mat-align-tabs="center"  >
-<mat-tab label="Lpg">
+<mat-tab-group style="background:white;color-adjust:white;" animationDuration="400ms" mat-align-tabs="center">
 
-<table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8" >
+  <mat-tab label="Air Quality">
+    <table mat-table [dataSource]="this.dataSource2" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id" style="text-align:center">
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> No. </th>
+        <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="mq2"style="text-align:center">
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Air Quality </th>
+        <td mat-cell *matCellDef="let element"style="text-align:center"> {{element.mq135}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="mq135" >
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Date </th>
+        <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.date}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-tab>
+
+  <mat-tab label="LPG">
+  <table mat-table [dataSource]="this.dataSource" class="mat-elevation-z8" >
 
 
   <!--- Note that these columns can be defined in any order.
@@ -29,7 +60,7 @@
 
   <!-- Name Column -->
   <ng-container matColumnDef="mq2"style="text-align:center">
-    <th mat-header-cell *matHeaderCellDef style="text-align:center"> Lpg </th>
+    <th mat-header-cell *matHeaderCellDef style="text-align:center"> LPG </th>
     <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.lpg}} </td>
   </ng-container>
 
@@ -41,77 +72,10 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-</mat-tab>
-
-<mat-tab label="AirQuality">
-
-  <table mat-table [dataSource]="this.dataSource2" class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="id" style="text-align:center">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> No. </th>
-      <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="mq2"style="text-align:center">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> AirQuality </th>
-      <td mat-cell *matCellDef="let element"style="text-align:center"> {{element.mq135}} </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="mq135" >
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Date </th>
-      <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.date}} </td>
-    </ng-container>
-
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-  </mat-tab>
-
-
-<mat-tab label="RF">
-
-  <table mat-table [dataSource]="this.dataSource3" class="mat-elevation-z8">
-
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Position Column -->
-    <ng-container matColumnDef="id" style="text-align:center">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center" > No. </th>
-      <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="mq2"style="text-align:center">
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> RF </th>
-      <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.rf}} </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="mq135" >
-      <th mat-header-cell *matHeaderCellDef style="text-align:center"> Date </th>
-      <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.date}} </td>
-    </ng-container>
-
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   </mat-tab>
 
-  <mat-tab label="Co">
+  <mat-tab label="CO">
     <table mat-table [dataSource]="this.dataSource4" class="mat-elevation-z8">
 
       <!--- Note that these columns can be defined in any order.
@@ -125,7 +89,7 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="mq2"style="text-align:center">
-        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Co </th>
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> CO </th>
         <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.co}} </td>
       </ng-container>
 
@@ -139,8 +103,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     </mat-tab>
-    <mat-tab label="Smoke">
 
+    <mat-tab label="Smoke">
       <table mat-table [dataSource]="this.dataSource5" class="mat-elevation-z8">
 
         <!--- Note that these columns can be defined in any order.
@@ -167,5 +131,34 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      </mat-tab>
+    </mat-tab>
+
+  <mat-tab label="RF">
+    <table mat-table [dataSource]="this.dataSource3" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="id" style="text-align:center">
+        <th mat-header-cell *matHeaderCellDef style="text-align:center" > No. </th>
+        <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.id}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="mq2"style="text-align:center">
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> RF </th>
+        <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.rf}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="mq135" >
+        <th mat-header-cell *matHeaderCellDef style="text-align:center"> Date </th>
+        <td mat-cell *matCellDef="let element" style="text-align:center"> {{element.date}} </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-tab>
 </mat-tab-group>

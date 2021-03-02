@@ -5,3 +5,27 @@
   flex: 0.01 auto;
   margin-right:4px;
 }
+
+.container{
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+}
+
+.content{
+  flex-shrink: 1;
+  flex-grow: 1;
+  padding: 3px 5px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.footer{
+  flex-shrink: 0;
+  flex-grow: 0;
+  background: #3F51B5;
+  color: white;
+  padding: 3px 15px;
+  text-align: center;
+}
