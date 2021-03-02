@@ -183,7 +183,7 @@ void loop() {
 
         pCharacteristic->setValue(lpg);
         pCharacteristic->notify();
-        pCharacteristic2->setValue(lett2);
+        pCharacteristic2->setValue(airquality);
         pCharacteristic2->notify();
         pCharacteristic3->setValue(rf);
         pCharacteristic3->notify();
@@ -193,7 +193,7 @@ void loop() {
         pCharacteristic5->notify();
         value++;
         delay(3); // bluetooth stack will go into congestion, if too many packets are sent, in 6 hours test i was able to go as low as 3ms
-        delay(2000);
+        delay(2000); //delay improved for FE of webApp
     }
     // disconnecting
     if (!deviceConnected && oldDeviceConnected) {
