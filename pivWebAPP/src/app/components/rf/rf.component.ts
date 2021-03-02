@@ -1,9 +1,11 @@
+import { MyallertComponent } from './../util/myallert/myallert.component';
 import { RfService } from './../../services/rf.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BluetoothCore, BrowserWebBluetooth, ConsoleLoggerService } from '@manekinekko/angular-web-bluetooth';
+import { MatDialog } from '@angular/material/dialog';
 const BLE_SERVICE3 ="4fafc203-1fb5-459e-8fcc-c5c9c331914b"
 const BLE_CHARACTERISTIC3="beb5483c-36e1-4688-b7f5-ea07361b26a8"
 export const bleService3 = (d: BluetoothCore) => new RfService(d);
@@ -43,7 +45,12 @@ export class RfComponent implements OnInit {
   streamSubscription: Subscription;
   valuesSubscription :Subscription;
   deviceIsConnected : Boolean;
-  constructor( public httpClient : HttpClient, public ble2 : RfService, public snackBar: MatSnackBar) {
+  something: boolean = false;
+  somethingChanged = new EventEmitter();
+  count : number = 0;
+
+  constructor(  public dialog: MatDialog,
+    public httpClient : HttpClient, public ble2 : RfService, public snackBar: MatSnackBar) {
     this.config()
   }
 
@@ -59,6 +66,12 @@ export class RfComponent implements OnInit {
         this.item = this.myMap3
         console.log(this.myMap3)
         this.saveData(this.dto);
+        if (this.myMap3.get('rf') >= 3450) {
+          this.count= this.count+1;
+          if(this.count >100){
+            this.openDialog();
+          }
+        }
         return this.myMap3;
       }
     });
@@ -70,6 +83,18 @@ export class RfComponent implements OnInit {
     .subscribe( () => this.updateValue.bind(this), error => this.hasError.bind(this));
   }
 
+  //For popup
+  doSomething() {
+    this.something = true;
+    this.somethingChanged.emit(this.something);
+  }
+  openDialog() {
+    this.dialog.open(MyallertComponent, {
+      data: {
+        allert: 'mq2',
+      },
+    });
+  }
   requestValue() {
     this.deviceIsConnected=true;
     this.valuesSubscription = this.ble2.value()

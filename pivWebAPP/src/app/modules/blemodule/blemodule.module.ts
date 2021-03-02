@@ -27,8 +27,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
 
-  declarations: [Mq135Component,
-  Mq135Service],
+  declarations: [
+  //   Mq135Component,
+  // Mq135Service
+],
   imports: [
     BrowserModule,
     AppRoutingModule,

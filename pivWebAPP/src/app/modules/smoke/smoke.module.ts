@@ -22,8 +22,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
-    SmokeComponent,
-    SmokeService
+    // SmokeComponent,
+    // SmokeService
   ],
   imports: [
     BrowserModule,

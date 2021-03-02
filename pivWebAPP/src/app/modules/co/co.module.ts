@@ -20,8 +20,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
-    CoComponent,
-    CoService
+    // CoComponent,
+    // CoService
   ],
   imports: [
     BrowserModule,
